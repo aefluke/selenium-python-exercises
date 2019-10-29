@@ -18,4 +18,4 @@ def test_3_1():
                  str(current_time.tm_min) + ":" +
                  str(current_time.tm_sec)
                  )
-    assert current_time.tm_hour < 9, "Current time should be before noon"
+    assert current_time.tm_hour < 12, "Current time should be before noon"
