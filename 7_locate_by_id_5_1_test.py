@@ -20,11 +20,6 @@ def test_3_5_1():
     new_page("http://www.automationpractice.com/index.php")
     try:
         driver.find_element_by_id("search_query_top")
-        # driver.find_element_by_class_name("login")
-        # driver.find_element_by_tag_name("h1")
-        # driver.find_element_by_link_text('Contact us')
-        # driver.find_element_by_partial_link_text('Contact')
-        # driver.find_element_by_xpath('//form[@id="searchbox"]')
         print("The element has been found")
     except NoSuchElementException:
         print("The element has not been found")
