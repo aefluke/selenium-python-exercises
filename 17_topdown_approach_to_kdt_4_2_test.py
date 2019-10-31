@@ -1,37 +1,47 @@
-from time import sleep
+import logging
+from selenium import webdriver, common
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions \
+    as EC
 
-from selenium import webdriver
+logging.basicConfig(level=logging.INFO)
+driver = webdriver.Chrome()
 
 
-def open_page(driver, url):
+def new_page(url):
+    logging.debug("new_page was called")
     driver.get(url)
+    logging.info("New Page:")
+    logging.info("URL: " + driver.current_url)
+    logging.info("Title: " + driver.title)
 
 
-def search_for(driver, search):
-    search_box = "search_query_top"
-    driver.find_element_by_id(search_box).click()
-    driver.find_element_by_id(search_box).clear()
-    driver.find_element_by_id(search_box).send_keys(search)
-    driver.find_element_by_name("submit_search").click()
+def doSearch(search_text):
+    driver.find_element_by_xpath("//form[@id = 'searchbox']") \
+        .click()
+    driver.find_element_by_name("search_query") \
+        .clear()
+    driver.find_element_by_name("search_query") \
+        .send_keys(search_text)
 
 
-def add_to_cart(driver):
-    add_to_cart = "//div[@id='center_column']/ul/li/div/div[2]/div[2]/a/span"
-    driver.find_element_by_xpath(add_to_cart).click()
+def itemAddtoCartByNum(item):
+    driver.find_elements_by_xpath( \
+        "//a[@title='Add to cart']")[item] \
+        .click()
 
 
-def test_app_dynamics_job():
-    driver = webdriver.Chrome()
-    driver.implicitly_wait(30)
-    target_site = \
-        "http://automationpractice.com/index.php?"
-    search = "printed dress"
-    open_page(driver, target_site)
-    search_for(driver, search)
-    add_to_cart(driver)
-    sleep(10)
-    driver.quit()
+def test_4_4_2():
+    url = "http://automationpractice.com"
+    search_prompt = "printed dress"
+    item_index = 0
+    new_page(url)
+    doSearch(search_prompt)
+    itemAddtoCartByNum(item_index)
+    assert len(driver.find_elements_by_xpath("//a[@title='Printed Summer Dress']")) > 0
 
 
+driver.quit()
 if __name__ == "__main__":
-    test_app_dynamics_job()
+    test_4_4_2()

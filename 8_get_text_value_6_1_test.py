@@ -19,8 +19,6 @@ def test_3_6_1():
     new_page("http://automationpractice.com/index.php")
     element = driver.find_element_by_class_name("login")
     print("Element text: " + element.text)
-    # element_outer_html = element.get_attribute("outerHTML")
-    # print("outerHTML: " + element_outer_html)
     driver.quit()
 
 
